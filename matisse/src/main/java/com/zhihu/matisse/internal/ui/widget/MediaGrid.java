@@ -16,8 +16,6 @@
 package com.zhihu.matisse.internal.ui.widget;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -26,10 +24,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zhihu.matisse.R;
+import com.zhihu.matisse.customui.IMediaGrid;
 import com.zhihu.matisse.internal.entity.Item;
 import com.zhihu.matisse.internal.entity.SelectionSpec;
 
-public class MediaGrid extends SquareFrameLayout implements View.OnClickListener {
+public class MediaGrid extends SquareFrameLayout implements View.OnClickListener,IMediaGrid {
 
     private ImageView mThumbnail;
     private CheckView mCheckView;
@@ -37,8 +36,8 @@ public class MediaGrid extends SquareFrameLayout implements View.OnClickListener
     private TextView mVideoDuration;
 
     private Item mMedia;
-    private PreBindInfo mPreBindInfo;
-    private OnMediaGridClickListener mListener;
+    private IMediaGrid.PreBindInfo mPreBindInfo;
+    private IMediaGrid.OnMediaGridClickListener mListener;
 
     public MediaGrid(Context context) {
         super(context);
@@ -73,10 +72,17 @@ public class MediaGrid extends SquareFrameLayout implements View.OnClickListener
         }
     }
 
-    public void preBindMedia(PreBindInfo info) {
+    @Override
+    public View create() {
+        return this;
+    }
+
+    @Override
+    public void preBindMedia(IMediaGrid.PreBindInfo info) {
         mPreBindInfo = info;
     }
 
+    @Override
     public void bindMedia(Item item) {
         mMedia = item;
         setGifTag();
@@ -96,15 +102,15 @@ public class MediaGrid extends SquareFrameLayout implements View.OnClickListener
     private void initCheckView() {
         mCheckView.setCountable(mPreBindInfo.mCheckViewCountable);
     }
-
+    @Override
     public void setCheckEnabled(boolean enabled) {
         mCheckView.setEnabled(enabled);
     }
-
+    @Override
     public void setCheckedNum(int checkedNum) {
         mCheckView.setCheckedNum(checkedNum);
     }
-
+    @Override
     public void setChecked(boolean checked) {
         mCheckView.setChecked(checked);
     }
@@ -127,8 +133,8 @@ public class MediaGrid extends SquareFrameLayout implements View.OnClickListener
             mVideoDuration.setVisibility(GONE);
         }
     }
-
-    public void setOnMediaGridClickListener(OnMediaGridClickListener listener) {
+    @Override
+    public void setOnMediaGridClickListener(IMediaGrid.OnMediaGridClickListener listener) {
         mListener = listener;
     }
 
@@ -136,26 +142,5 @@ public class MediaGrid extends SquareFrameLayout implements View.OnClickListener
         mListener = null;
     }
 
-    public interface OnMediaGridClickListener {
-
-        void onThumbnailClicked(ImageView thumbnail, Item item, RecyclerView.ViewHolder holder);
-
-        void onCheckViewClicked(CheckView checkView, Item item, RecyclerView.ViewHolder holder);
-    }
-
-    public static class PreBindInfo {
-        int mResize;
-        Drawable mPlaceholder;
-        boolean mCheckViewCountable;
-        RecyclerView.ViewHolder mViewHolder;
-
-        public PreBindInfo(int resize, Drawable placeholder, boolean checkViewCountable,
-                           RecyclerView.ViewHolder viewHolder) {
-            mResize = resize;
-            mPlaceholder = placeholder;
-            mCheckViewCountable = checkViewCountable;
-            mViewHolder = viewHolder;
-        }
-    }
 
 }

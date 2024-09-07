@@ -22,6 +22,8 @@ import androidx.annotation.StyleRes;
 
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.R;
+import com.zhihu.matisse.customui.CustomUi;
+import com.zhihu.matisse.customui.ImageUi;
 import com.zhihu.matisse.engine.ImageEngine;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.filter.Filter;
@@ -52,11 +54,10 @@ public final class SelectionSpec {
     public ImageEngine imageEngine;
     public boolean hasInited;
     public OnSelectedListener onSelectedListener;
-    public boolean originalable;
     public boolean autoHideToobar;
     public int originalMaxSize;
-    public OnCheckedListener onCheckedListener;
     public boolean showPreview;
+    public ImageUi imageUi;
 
     private SelectionSpec() {
     }
@@ -89,10 +90,10 @@ public final class SelectionSpec {
         thumbnailScale = 0.5f;
         imageEngine = new GlideEngine();
         hasInited = true;
-        originalable = false;
         autoHideToobar = false;
         originalMaxSize = Integer.MAX_VALUE;
         showPreview = true;
+        imageUi=new CustomUi();
     }
 
     public boolean singleSelectionModeEnabled() {

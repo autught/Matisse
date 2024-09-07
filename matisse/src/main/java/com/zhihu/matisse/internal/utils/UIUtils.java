@@ -16,6 +16,8 @@
 package com.zhihu.matisse.internal.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.TypedValue;
 
 public class UIUtils {
 
@@ -29,4 +31,8 @@ public class UIUtils {
         return spanCount;
     }
 
+    public static float dp2px(int dp) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) dp,
+                Resources.getSystem().getDisplayMetrics());
+    }
 }

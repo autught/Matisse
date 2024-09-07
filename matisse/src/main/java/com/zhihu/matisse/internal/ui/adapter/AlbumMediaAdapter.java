@@ -20,19 +20,21 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.zhihu.matisse.R;
+import com.zhihu.matisse.customui.IMediaGrid;
 import com.zhihu.matisse.internal.entity.Album;
+import com.zhihu.matisse.internal.entity.IncapableCause;
 import com.zhihu.matisse.internal.entity.Item;
 import com.zhihu.matisse.internal.entity.SelectionSpec;
-import com.zhihu.matisse.internal.entity.IncapableCause;
 import com.zhihu.matisse.internal.model.SelectedItemCollection;
 import com.zhihu.matisse.internal.ui.widget.CheckView;
 import com.zhihu.matisse.internal.ui.widget.MediaGrid;
@@ -78,8 +80,7 @@ public class AlbumMediaAdapter extends
             });
             return holder;
         } else if (viewType == VIEW_TYPE_MEDIA) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.media_grid_item, parent, false);
-            return new MediaViewHolder(v);
+            return new MediaViewHolder(mSelectionSpec.imageUi.mediaItemCreate(parent.getContext()));
         }
         return null;
     }
@@ -113,8 +114,8 @@ public class AlbumMediaAdapter extends
             MediaViewHolder mediaViewHolder = (MediaViewHolder) holder;
 
             final Item item = Item.valueOf(cursor);
-            mediaViewHolder.mMediaGrid.preBindMedia(new MediaGrid.PreBindInfo(
-                    getImageResize(mediaViewHolder.mMediaGrid.getContext()),
+            mediaViewHolder.mMediaGrid.preBindMedia(new IMediaGrid.PreBindInfo(
+                    getImageResize(mediaViewHolder.itemView.getContext()),
                     mPlaceholder,
                     mSelectionSpec.countable,
                     holder
@@ -125,7 +126,7 @@ public class AlbumMediaAdapter extends
         }
     }
 
-    private void setCheckStatus(Item item, MediaGrid mediaGrid) {
+    private void setCheckStatus(Item item, IMediaGrid mediaGrid) {
         if (mSelectionSpec.countable) {
             int checkedNum = mSelectedCollection.checkedNumOf(item);
             if (checkedNum > 0) {
@@ -169,7 +170,7 @@ public class AlbumMediaAdapter extends
     }
 
     @Override
-    public void onCheckViewClicked(CheckView checkView, Item item, RecyclerView.ViewHolder holder) {
+    public void onCheckViewClicked(View checkView, Item item, RecyclerView.ViewHolder holder) {
         updateSelectedItem(item, holder);
     }
 
@@ -278,11 +279,11 @@ public class AlbumMediaAdapter extends
 
     private static class MediaViewHolder extends RecyclerView.ViewHolder {
 
-        private MediaGrid mMediaGrid;
+        private IMediaGrid mMediaGrid;
 
-        MediaViewHolder(View itemView) {
-            super(itemView);
-            mMediaGrid = (MediaGrid) itemView;
+        MediaViewHolder(IMediaGrid itemView) {
+            super(itemView.create());
+            mMediaGrid = itemView;
         }
     }
 

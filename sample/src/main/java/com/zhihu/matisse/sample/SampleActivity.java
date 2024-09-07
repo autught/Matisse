@@ -32,7 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tbruyelle.rxpermissions2.RxPermissions;
+
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -65,16 +65,16 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
     @SuppressLint("CheckResult")
     @Override
     public void onClick(final View v) {
-        RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe(aBoolean -> {
-                    if (aBoolean) {
+//        RxPermissions rxPermissions = new RxPermissions(this);
+//        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                .subscribe(aBoolean -> {
+//                    if (aBoolean) {
                         startAction(v);
-                    } else {
-                        Toast.makeText(SampleActivity.this, R.string.permission_request_denied, Toast.LENGTH_LONG)
-                                .show();
-                    }
-                }, Throwable::printStackTrace);
+//                    } else {
+//                        Toast.makeText(SampleActivity.this, R.string.permission_request_denied, Toast.LENGTH_LONG)
+//                                .show();
+//                    }
+//                }, Throwable::printStackTrace);
     }
     // </editor-fold>
 
@@ -85,6 +85,7 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
                         .choose(MimeType.ofImage(), false)
                         .countable(true)
                         .capture(true)
+                        .spanCount(4)
                         .captureStrategy(
                                 new CaptureStrategy(true, "com.zhihu.matisse.sample.fileprovider", "test"))
                         .maxSelectable(9)
