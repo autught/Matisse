@@ -44,6 +44,7 @@ import androidx.annotation.RequiresApi;
 import androidx.annotation.StyleRes;
 import androidx.fragment.app.Fragment;
 
+import com.zhihu.matisse.customui.ImageUi;
 import com.zhihu.matisse.engine.ImageEngine;
 import com.zhihu.matisse.filter.Filter;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
@@ -246,6 +247,11 @@ public final class SelectionCreator {
      */
     public SelectionCreator captureStrategy(CaptureStrategy captureStrategy) {
         mSelectionSpec.captureStrategy = captureStrategy;
+        return this;
+    }
+
+    public SelectionCreator customUi(ImageUi ui) {
+        mSelectionSpec.imageUi = ui;
         return this;
     }
 
