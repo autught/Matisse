@@ -91,6 +91,9 @@ public class MatisseActivity extends AppCompatActivity implements
         // programmatically set theme before super.onCreate()
         mSpec = SelectionSpec.getInstance();
         setTheme(mSpec.themeId);
+        if (mSpec.imageUi!=null){
+            mSpec.imageUi.setStatusBar();
+        }
         super.onCreate(savedInstanceState);
         if (!mSpec.hasInited) {
             setResult(RESULT_CANCELED);
