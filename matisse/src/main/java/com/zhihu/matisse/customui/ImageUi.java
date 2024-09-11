@@ -1,5 +1,6 @@
 package com.zhihu.matisse.customui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -47,7 +48,7 @@ public interface ImageUi {
     /**
      * 设置状态栏
      */
-    void setStatusBar();
+    void setStatusBar(Activity activity);
 
     /**
      * 设置空布局

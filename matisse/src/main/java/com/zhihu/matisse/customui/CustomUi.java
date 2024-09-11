@@ -1,5 +1,6 @@
 package com.zhihu.matisse.customui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -16,7 +17,7 @@ import com.zhihu.matisse.internal.utils.UIUtils;
 
 public class CustomUi implements ImageUi {
     @Override
-    public void setStatusBar() {
+    public void setStatusBar(Activity activity) {
 
     }
 

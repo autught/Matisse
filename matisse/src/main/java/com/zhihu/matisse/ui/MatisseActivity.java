@@ -17,7 +17,6 @@ package com.zhihu.matisse.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -91,8 +90,8 @@ public class MatisseActivity extends AppCompatActivity implements
         // programmatically set theme before super.onCreate()
         mSpec = SelectionSpec.getInstance();
         setTheme(mSpec.themeId);
-        if (mSpec.imageUi!=null){
-            mSpec.imageUi.setStatusBar();
+        if (mSpec.imageUi != null) {
+            mSpec.imageUi.setStatusBar(this);
         }
         super.onCreate(savedInstanceState);
         if (!mSpec.hasInited) {
